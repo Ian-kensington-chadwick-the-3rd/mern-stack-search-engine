@@ -1,18 +1,24 @@
 const typeDefs = `
 type User {
-    _id: ID
+    _id: ID!
     username: String
     email: String
-    password: String
-    savedBooks: [String]!
+    bookCount: Int
+    savedBooks: [Book]
 }
 type Book {
     authors: [String]
-    description: String!
+    description: String
     bookId: String!
     image: String
     link: String
-    title: String!
+    title: String
+}
+
+
+type Auth {
+    token: ID!
+    user: User!
 }
 
 input bookInput {
@@ -22,11 +28,6 @@ input bookInput {
     image: String
     link: String
     title: String
-}
-
-type Auth {
-    token: ID!
-    user: User!
 }
 
 type Query {

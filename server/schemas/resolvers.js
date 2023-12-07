@@ -3,12 +3,6 @@ const { signToken, AuthenticationError } = require('../utils/auth');
 
 const resolvers = {
     Query: {
-        users: async () => {
-            return User.find();
-        },
-        users: async () => {
-            return User.findOne({_id: UserId})
-        },
         me: async ( parent, args, context) => {
             if(context.user){
                 return User.findOne({_id: context.user._id});
@@ -41,8 +35,7 @@ const resolvers = {
                     $addToSet: { ...book}
                 },
                 {
-                    new: true,
-                    runValidators: true,
+                    new: true
                 }
             );
                 

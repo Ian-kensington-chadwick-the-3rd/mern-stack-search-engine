@@ -19,11 +19,13 @@ const SavedBooks = () => {
   // const [userData, setUserData] = useState({});
 
   // use this to determine if `useEffect()` hook needs to run again
-  const userDataLength = Object.keys(userData).length;
+
+  
   const { loading, data } = useQuery(GET_ME)
   const [removebook, {error}] = useMutation(REMOVE_BOOK)
   const userData = data?.me || [];
-  
+  // const userDataLength = Object.keys(userData).length;
+
 
   
 
@@ -43,7 +45,7 @@ const SavedBooks = () => {
   
       // const response = await deleteBook(bookId, token);
 
-      if (!response.ok) {
+      if (!response) {
         throw new Error('something went wrong!');
       }
 
@@ -57,13 +59,13 @@ const SavedBooks = () => {
   };
 
   // if data isn't here yet, say so
-  if (!userDataLength) {
+  if (loading) {
     return <h2>LOADING...</h2>;
   }
 
   return (
     <>
-      <div fluid className="text-light bg-dark p-5">
+      <div  className="text-light bg-dark p-5">
         <Container>
           <h1>Viewing saved books!</h1>
         </Container>

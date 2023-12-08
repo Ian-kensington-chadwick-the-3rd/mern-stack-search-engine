@@ -77,10 +77,10 @@ const SearchBooks = () => {
 
     try {
       const response = await saveBook({
-      variables: {book: bookToSave}
+      variables: { ...bookToSave}
       });
-
-      if (!response.ok) {
+        console.log(response)
+      if (!response) {
         throw new Error('something went wrong!');
       }
 

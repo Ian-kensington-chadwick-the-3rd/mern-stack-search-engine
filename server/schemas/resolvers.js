@@ -1,11 +1,12 @@
 const { User } = require('../models')
-const { signToken, AuthenticationError } = require('../utils/auth');
+const { signToken, AuthenticationError} = require('../utils/auth');
+// const { AuthenticationError } = require('apollo-server');
 
 const resolvers = {
     Query: {
         me: async ( parent, args, context) => {
             if(context.user){
-                return User.findOne({_id: context.user._id});
+                return User.findOne({_id: context.user._id}).select('-__v -password');
             }
             throw AuthenticationError;
         },
@@ -25,7 +26,7 @@ const resolvers = {
             if(!user){
                 throw AuthenticationError;
             }
-
+                console.log('password')
             const correctPassword = await user.isCorrectPassword(password);
             if(!correctPassword){
                 throw AuthenticationError;
@@ -38,13 +39,12 @@ const resolvers = {
                 return User.findOneAndUpdate(
                 {_id: context.user._id},
                 {
-                    $addToSet: { ...book}
+                    $addToSet: { savedBooks:{...book}}
                 },
                 {
                     new: true
                 }
-            );
-                
+            );   
             }
             throw AuthenticationError;
         },
@@ -52,7 +52,7 @@ const resolvers = {
             if(context.user){
                 return User.findOneAndUpdate(
                     {_id: context.user._id},
-                    {$pull: {bookId: bookId}},
+                    {$pull:  {savedBooks: {bookId: bookId.bookId}}},
                     {new: true}
                 )
             }

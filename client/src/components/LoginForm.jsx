@@ -26,7 +26,7 @@ const LoginForm = () => {
       event.preventDefault();
       event.stopPropagation();
     }
-    console.log(userFormData)
+    console.log("userFormData:", userFormData)
     try {
       const {response} = await loginUser({
         varaibles: { email: loginUser.email, password: loginUser.password }
@@ -36,7 +36,7 @@ const LoginForm = () => {
         throw new Error('something went wrong!');
       }
 
-        console.log(response)
+        console.log("response: ", response)
       Auth.login(response.loginUser.token);
     } catch (err) {
       console.error(err);

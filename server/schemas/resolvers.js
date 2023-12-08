@@ -19,9 +19,9 @@ const resolvers = {
             return { token, user};
         },
         login: async (parent, {email, password}) => {
-            
+            console.log('passthrough-data:', email,password)
             const user = await User.findOne({ email });
-            console.log(user)
+            console.log('userdata: ', user)
             if(!user){
                 throw AuthenticationError;
             }

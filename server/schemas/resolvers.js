@@ -12,18 +12,24 @@ const resolvers = {
     },
     Mutation: {
         addUser: async (parent, {username, email, password}) => {
+            console.log(username, email)
             const user = await User.create({username, email, password});
             const token = signToken(user);
 
             return { token, user};
         },
         login: async (parent, {email, password}) => {
+            
             const user = await User.findOne({ email });
-
+            console.log(user)
             if(!user){
                 throw AuthenticationError;
             }
 
+            const correctPassword = await user.isCorrectPassword(password);
+            if(!correctPassword){
+                throw AuthenticationError;
+            }
             const token = signToken(user);
             return {token, user}
         },
